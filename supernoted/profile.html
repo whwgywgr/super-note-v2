@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - SuperNoted</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h1>SuperNoted</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="profile.html" class="nav-link active"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="index.html" class="nav-link"><i class="fas fa-folder"></i> Folder</a></li>
+                <li><a href="notes.html" class="nav-link"><i class="fas fa-sticky-note"></i> Notes</a></li>
+                <li><a href="#" class="nav-link"><i class="fas fa-bug"></i> Report a Bug</a></li>
+                <li><a href="#" class="nav-link"><i class="fas fa-info-circle"></i> About</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <section class="layout profile-layout">
+                <h2>Profile Settings</h2>
+                <form class="profile-form">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your full name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="Enter your username">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="current-password">Current Password</label>
+                        <input type="password" id="current-password" name="current-password" placeholder="Enter current password">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="new-password">New Password</label>
+                        <input type="password" id="new-password" name="new-password" placeholder="Enter new password">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm New Password</label>
+                        <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm new password">
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="button" class="btn btn-danger" id="logout-btn">Logout</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 

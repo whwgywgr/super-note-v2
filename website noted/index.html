@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="tailwind.config.js"></script>
+</head>
+<body class="font-sans m-0 p-0 leading-relaxed flex transition-all duration-300 bg-blue-sky-bg text-blue-sky-text" data-theme="blue-sky">
+    <!-- Sidebar -->
+    <div class="w-64 h-screen bg-blue-sky-sidebar p-5 fixed left-0 top-0 shadow-lg transition-all duration-300 flex flex-col" id="sidebar">
+        <div class="flex-1">
+            <button class="absolute right-[-20px] top-5 bg-blue-sky-sidebar text-white border-none w-5 h-10 cursor-pointer rounded-r" onclick="toggleSidebar()">☰</button>
+            <h2 class="text-white text-center border-b-2 border-blue-sky-sidebarHover pb-2.5 mt-0 whitespace-nowrap overflow-hidden flex items-center justify-center">
+                <i class="fas fa-book mr-2.5"></i>
+                <span class="title-text">Website Notes</span>
+            </h2>
+            <nav class="mt-8">
+                <a href="#profile" class="flex items-center justify-center text-white no-underline py-3 px-4 my-2.5 rounded transition-colors duration-300 bg-blue-sky-sidebarActive hover:bg-blue-sky-sidebarHover">
+                    <i class="fas fa-user w-5 text-center"></i>
+                    <span class="nav-text ml-2.5">Profile</span>
+                </a>
+                <a href="#notes" class="flex items-center justify-center text-white no-underline py-3 px-4 my-2.5 rounded transition-colors duration-300 bg-blue-sky-sidebarActive hover:bg-blue-sky-sidebarHover">
+                    <i class="fas fa-sticky-note w-5 text-center"></i>
+                    <span class="nav-text ml-2.5">Notes</span>
+                </a>
+                <a href="#folders" class="flex items-center justify-center text-white no-underline py-3 px-4 my-2.5 rounded transition-colors duration-300 bg-blue-sky-sidebarActive hover:bg-blue-sky-sidebarHover">
+                    <i class="fas fa-folder w-5 text-center"></i>
+                    <span class="nav-text ml-2.5">Folders</span>
+                </a>
+                <a href="#bug" class="flex items-center justify-center text-white no-underline py-3 px-4 my-2.5 rounded transition-colors duration-300 bg-blue-sky-sidebarActive hover:bg-blue-sky-sidebarHover">
+                    <i class="fas fa-bug w-5 text-center"></i>
+                    <span class="nav-text ml-2.5">Report a Bug</span>
+                </a>
+                <a href="#premium" class="flex items-center justify-center text-white no-underline py-3 px-4 my-2.5 rounded transition-colors duration-300 bg-blue-sky-sidebarActive hover:bg-blue-sky-sidebarHover">
+                    <i class="fas fa-crown w-5 text-center"></i>
+                    <span class="nav-text ml-2.5">Premium</span>
+                </a>
+                <a href="#about" class="flex items-center justify-center text-white no-underline py-3 px-4 my-2.5 rounded transition-colors duration-300 bg-blue-sky-sidebarActive hover:bg-blue-sky-sidebarHover">
+                    <i class="fas fa-info-circle w-5 text-center"></i>
+                    <span class="nav-text ml-2.5">About</span>
+                </a>
+            </nav>
+            <div class="theme-selector mt-5 pt-4 border-t border-white/10 relative">
+                <button class="theme-selector-button w-full flex items-center justify-between p-2.5 bg-white/10 rounded text-white cursor-pointer transition-colors duration-300 hover:bg-white/20" onclick="toggleThemeDropdown()">
+                    <div class="flex items-center">
+                        <i class="fas fa-palette mr-2.5"></i>
+                        <span>Select Theme</span>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="theme-dropdown absolute bottom-full left-4 right-4 bg-blue-sky-sidebar rounded shadow-lg hidden z-50" id="themeDropdown">
+                    <div class="theme-option flex items-center p-2.5 text-white cursor-pointer transition-colors duration-300 hover:bg-white/10 active" data-theme="blue-sky" onclick="changeTheme('blue-sky')">
+                        <div class="w-5 h-5 rounded-full mr-2.5 border-2 border-white/30" style="background: #2196F3;"></div>
+                        <span>Blue Sky</span>
+                    </div>
+                    <div class="theme-option flex items-center p-2.5 text-white cursor-pointer transition-colors duration-300 hover:bg-white/10" data-theme="wooden" onclick="changeTheme('wooden')">
+                        <div class="w-5 h-5 rounded-full mr-2.5 border-2 border-white/30" style="background: #8B4513;"></div>
+                        <span>Wooden</span>
+                    </div>
+                    <div class="theme-option flex items-center p-2.5 text-white cursor-pointer transition-colors duration-300 hover:bg-white/10" data-theme="fire" onclick="changeTheme('fire')">
+                        <div class="w-5 h-5 rounded-full mr-2.5 border-2 border-white/30" style="background: #FF5722;"></div>
+                        <span>Fire</span>
+                    </div>
+                    <div class="theme-option flex items-center p-2.5 text-white cursor-pointer transition-colors duration-300 hover:bg-white/10" data-theme="red-black" onclick="changeTheme('red-black')">
+                        <div class="w-5 h-5 rounded-full mr-2.5 border-2 border-white/30" style="background: #FF0000;"></div>
+                        <span>Red & Black</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl ml-72 p-5 transition-all duration-300" id="mainContent">
+        <header class="text-center py-5 border-b-2 border-blue-sky-border">
+            <h1 class="text-3xl font-bold text-blue-sky-text">Website Notes</h1>
+        </header>
+        
+        <!-- Search Bar -->
+        <div class="search-bar mb-5">
+            <input type="text" 
+                   placeholder="🔍 Search notes..." 
+                   class="w-full p-3 rounded border border-blue-sky-border focus:outline-none focus:ring-2 focus:ring-blue-sky-accent"
+                   id="searchInput">
+            <div class="filters mt-3 flex gap-2">
+                <select class="p-2 rounded border border-blue-sky-border" id="folderFilter">
+                    <option value="">All Folders</option>
+                </select>
+                <select class="p-2 rounded border border-blue-sky-border" id="tagFilter">
+                    <option value="">All Tags</option>
+                </select>
+                <select class="p-2 rounded border border-blue-sky-border" id="dateFilter">
+                    <option value="">All Time</option>
+                    <option value="today">Today</option>
+                    <option value="week">This Week</option>
+                    <option value="month">This Month</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons mb-5 flex gap-2">
+            <button class="bg-blue-sky-button text-blue-sky-buttonText px-5 py-2.5 rounded cursor-pointer transition-colors duration-300 hover:bg-blue-sky-buttonHover flex items-center" onclick="showNewNoteModal()">
+                <i class="fas fa-plus mr-2"></i> New Note
+            </button>
+            <button class="bg-blue-sky-button text-blue-sky-buttonText px-5 py-2.5 rounded cursor-pointer transition-colors duration-300 hover:bg-blue-sky-buttonHover flex items-center" onclick="showNewFolderModal()">
+                <i class="fas fa-folder-plus mr-2"></i> New Folder
+            </button>
+        </div>
+
+        <!-- View Toggle -->
+        <div class="view-toggle mb-5 flex justify-end">
+            <button class="p-2 rounded-l border border-blue-sky-border bg-blue-sky-card" onclick="setViewMode('grid')">
+                <i class="fas fa-th-large"></i>
+            </button>
+            <button class="p-2 rounded-r border border-blue-sky-border bg-blue-sky-card" onclick="setViewMode('list')">
+                <i class="fas fa-list"></i>
+            </button>
+        </div>
+
+        <!-- Two Column Layout -->
+        <div class="flex flex-col md:flex-row gap-5">
+            <!-- Folders Column -->
+            <div class="w-full md:w-1/3">
+                <h2 class="text-xl font-bold mb-4">Folders</h2>
+                <div class="folders-container bg-blue-sky-card rounded-lg p-4" id="foldersContainer">
+                    <!-- Folders will be dynamically added here -->
+                </div>
+            </div>
+
+            <!-- Notes Column -->
+            <div class="w-full md:w-2/3">
+                <h2 class="text-xl font-bold mb-4">Notes</h2>
+                <div class="notes-container bg-blue-sky-card rounded-lg p-4" id="notesContainer">
+                    <!-- Notes will be dynamically added here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Note Preview Modal -->
+        <div class="modal hidden fixed inset-0 bg-black bg-opacity-50 z-50" id="notePreviewModal">
+            <div class="modal-content bg-blue-sky-card p-5 rounded-lg max-w-4xl mx-auto mt-10 max-h-[80vh] overflow-y-auto">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold" id="previewNoteTitle"></h2>
+                    <div class="flex gap-2">
+                        <button class="text-blue-sky-accent hover:text-blue-sky-buttonHover" onclick="editNote()">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="text-red-500 hover:text-red-700" onclick="deleteNote()">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <button onclick="closeNotePreview()" class="text-blue-sky-text hover:text-blue-sky-accent">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="note-content" id="previewNoteContent"></div>
+                <div class="tags mt-4" id="previewNoteTags"></div>
+            </div>
+        </div>
+
+        <!-- Edit Note Modal -->
+        <div class="modal hidden fixed inset-0 bg-black bg-opacity-50 z-50" id="editNoteModal">
+            <div class="modal-content bg-blue-sky-card p-5 rounded-lg max-w-2xl mx-auto mt-10">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold">✍️ Edit Note</h2>
+                    <button onclick="closeEditNoteModal()" class="text-blue-sky-text hover:text-blue-sky-accent">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <input type="text" 
+                       placeholder="Note Title" 
+                       class="w-full p-2 mb-3 rounded border border-blue-sky-border"
+                       id="editNoteTitle">
+                <textarea 
+                    placeholder="Start typing your note here..." 
+                    class="w-full p-2 rounded border border-blue-sky-border h-64"
+                    id="editNoteContent"></textarea>
+                <div class="tags-container mt-3">
+                    <input type="text" 
+                           placeholder="Add tags (comma separated)" 
+                           class="w-full p-2 rounded border border-blue-sky-border"
+                           id="editNoteTags">
+                </div>
+                <div class="flex justify-between mt-4">
+                    <div class="flex gap-2">
+                        <button class="bg-blue-sky-button text-blue-sky-buttonText px-4 py-2 rounded" onclick="updateNote()">
+                            Save Changes
+                        </button>
+                        <button class="bg-gray-500 text-white px-4 py-2 rounded" onclick="closeEditNoteModal()">
+                            Cancel
+                        </button>
+                    </div>
+                    <div class="flex items-center">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="mr-2" id="editMarkdownSupport">
+                            Enable Markdown
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Note Modal -->
+        <div class="modal hidden fixed inset-0 bg-black bg-opacity-50 z-50" id="newNoteModal">
+            <div class="modal-content bg-blue-sky-card p-5 rounded-lg max-w-2xl mx-auto mt-10">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold">✍️ Create New Note</h2>
+                    <button onclick="closeNewNoteModal()" class="text-blue-sky-text hover:text-blue-sky-accent">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <input type="text" 
+                       placeholder="Note Title" 
+                       class="w-full p-2 mb-3 rounded border border-blue-sky-border"
+                       id="noteTitle">
+                <textarea 
+                    placeholder="Start typing your note here..." 
+                    class="w-full p-2 rounded border border-blue-sky-border h-64"
+                    id="noteContent"></textarea>
+                <div class="tags-container mt-3">
+                    <input type="text" 
+                           placeholder="Add tags (comma separated)" 
+                           class="w-full p-2 rounded border border-blue-sky-border"
+                           id="noteTags">
+                </div>
+                <div class="flex justify-between mt-4">
+                    <div class="flex gap-2">
+                        <button class="bg-blue-sky-button text-blue-sky-buttonText px-4 py-2 rounded" onclick="saveNote()">
+                            Save
+                        </button>
+                        <button class="bg-gray-500 text-white px-4 py-2 rounded" onclick="closeNewNoteModal()">
+                            Cancel
+                        </button>
+                    </div>
+                    <div class="flex items-center">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="mr-2" id="markdownSupport">
+                            Enable Markdown
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Folder Modal -->
+        <div class="modal hidden fixed inset-0 bg-black bg-opacity-50 z-50" id="newFolderModal">
+            <div class="modal-content bg-blue-sky-card p-5 rounded-lg max-w-md mx-auto mt-10">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold">📁 Create New Folder</h2>
+                    <button onclick="closeNewFolderModal()" class="text-blue-sky-text hover:text-blue-sky-accent">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <input type="text" 
+                       placeholder="Folder Name" 
+                       class="w-full p-2 mb-3 rounded border border-blue-sky-border"
+                       id="folderName">
+                <div class="flex justify-end gap-2">
+                    <button class="bg-blue-sky-button text-blue-sky-buttonText px-4 py-2 rounded" onclick="createFolder()">
+                        Create
+                    </button>
+                    <button class="bg-gray-500 text-white px-4 py-2 rounded" onclick="closeNewFolderModal()">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

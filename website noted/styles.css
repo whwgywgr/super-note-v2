@@ -1,0 +1,190 @@
+/* Custom styles that complement Tailwind CSS */
+
+/* Theme-specific styles */
+[data-theme="blue-sky"] {
+    --bg-color: #E3F2FD;
+    --text-color: #0D47A1;
+    --sidebar-bg: #2196F3;
+    --card-bg: #FFFFFF;
+    --border-color: #BBDEFB;
+    --accent-color: #2196F3;
+    --button-hover: #1976D2;
+}
+
+[data-theme="wooden"] {
+    --bg-color: #F5E6D3;
+    --text-color: #5D4037;
+    --sidebar-bg: #8B4513;
+    --card-bg: #FFFFFF;
+    --border-color: #D2B48C;
+    --accent-color: #8B4513;
+    --button-hover: #A0522D;
+}
+
+[data-theme="fire"] {
+    --bg-color: #FFF3E0;
+    --text-color: #BF360C;
+    --sidebar-bg: #FF5722;
+    --card-bg: #FFFFFF;
+    --border-color: #FFCCBC;
+    --accent-color: #FF5722;
+    --button-hover: #F4511E;
+}
+
+[data-theme="red-black"] {
+    --bg-color: #1A1A1A;
+    --text-color: #FFFFFF;
+    --sidebar-bg: #FF0000;
+    --card-bg: #2D2D2D;
+    --border-color: #444444;
+    --accent-color: #FF0000;
+    --button-hover: #CC0000;
+}
+
+/* Apply theme variables to Tailwind classes */
+[data-theme="blue-sky"] .bg-blue-sky-bg { background-color: var(--bg-color); }
+[data-theme="blue-sky"] .text-blue-sky-text { color: var(--text-color); }
+[data-theme="blue-sky"] .bg-blue-sky-sidebar { background-color: var(--sidebar-bg); }
+[data-theme="blue-sky"] .bg-blue-sky-card { background-color: var(--card-bg); }
+[data-theme="blue-sky"] .border-blue-sky-border { border-color: var(--border-color); }
+[data-theme="blue-sky"] .text-blue-sky-accent { color: var(--accent-color); }
+[data-theme="blue-sky"] .bg-blue-sky-button { background-color: var(--accent-color); }
+[data-theme="blue-sky"] .bg-blue-sky-buttonHover { background-color: var(--button-hover); }
+
+[data-theme="wooden"] .bg-wooden-bg { background-color: var(--bg-color); }
+[data-theme="wooden"] .text-wooden-text { color: var(--text-color); }
+[data-theme="wooden"] .bg-wooden-sidebar { background-color: var(--sidebar-bg); }
+[data-theme="wooden"] .bg-wooden-card { background-color: var(--card-bg); }
+[data-theme="wooden"] .border-wooden-border { border-color: var(--border-color); }
+[data-theme="wooden"] .text-wooden-accent { color: var(--accent-color); }
+[data-theme="wooden"] .bg-wooden-button { background-color: var(--accent-color); }
+[data-theme="wooden"] .bg-wooden-buttonHover { background-color: var(--button-hover); }
+
+[data-theme="fire"] .bg-fire-bg { background-color: var(--bg-color); }
+[data-theme="fire"] .text-fire-text { color: var(--text-color); }
+[data-theme="fire"] .bg-fire-sidebar { background-color: var(--sidebar-bg); }
+[data-theme="fire"] .bg-fire-card { background-color: var(--card-bg); }
+[data-theme="fire"] .border-fire-border { border-color: var(--border-color); }
+[data-theme="fire"] .text-fire-accent { color: var(--accent-color); }
+[data-theme="fire"] .bg-fire-button { background-color: var(--accent-color); }
+[data-theme="fire"] .bg-fire-buttonHover { background-color: var(--button-hover); }
+
+[data-theme="red-black"] .bg-red-black-bg { background-color: var(--bg-color); }
+[data-theme="red-black"] .text-red-black-text { color: var(--text-color); }
+[data-theme="red-black"] .bg-red-black-sidebar { background-color: var(--sidebar-bg); }
+[data-theme="red-black"] .bg-red-black-card { background-color: var(--card-bg); }
+[data-theme="red-black"] .border-red-black-border { border-color: var(--border-color); }
+[data-theme="red-black"] .text-red-black-accent { color: var(--accent-color); }
+[data-theme="red-black"] .bg-red-black-button { background-color: var(--accent-color); }
+[data-theme="red-black"] .bg-red-black-buttonHover { background-color: var(--button-hover); }
+
+/* Modal styles */
+.modal {
+    transition: opacity 0.3s ease-in-out;
+}
+
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Note and folder styles */
+.note {
+    transition: transform 0.2s ease-in-out;
+}
+
+.note:hover {
+    transform: translateY(-2px);
+}
+
+.folder {
+    transition: transform 0.2s ease-in-out;
+}
+
+.folder:hover {
+    transform: translateY(-2px);
+}
+
+/* View mode styles */
+.notes-container {
+    display: grid;
+    gap: 1rem;
+}
+
+.grid-view {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.list-view {
+    grid-template-columns: 1fr;
+}
+
+/* Tag styles */
+.tag {
+    display: inline-block;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.tag:hover {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+/* Button styles */
+.button {
+    transition: all 0.2s ease-in-out;
+}
+
+.button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Search bar styles */
+.search-bar {
+    transition: all 0.2s ease-in-out;
+}
+
+.search-bar:focus-within {
+    box-shadow: 0 0 0 2px var(--accent-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .notes-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 1rem;
+    }
+}
+
+/* Animation for pinned notes */
+@keyframes pinAnimation {
+    0% { transform: rotate(-10deg); }
+    50% { transform: rotate(10deg); }
+    100% { transform: rotate(-10deg); }
+}
+
+.pin-button.active {
+    animation: pinAnimation 0.5s ease-in-out;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--button-hover);
+} 

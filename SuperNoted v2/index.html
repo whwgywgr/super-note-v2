@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuperNoted v2</title>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <!-- TinyMCE -->
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-sticky-note"></i> SuperNoted v2</h1>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search notes...">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="notes-header">
+                <h2>Your Notes</h2>
+                <button class="add-note-btn" onclick="openModal()">
+                    <i class="fas fa-plus"></i> Add Note
+                </button>
+            </div>
+
+            <div class="notes-container">
+                <ul id="noteList" class="notes-list">
+                    <!-- Notes will be dynamically added here -->
+                </ul>
+            </div>
+        </main>
+
+        <!-- Note Editor Modal -->
+        <div id="noteModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit Note</h3>
+                    <button class="close-btn" onclick="closeModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="noteTitle" placeholder="Note title...">
+                    <textarea id="noteContent"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button class="save-btn" onclick="saveNote()">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                    <button class="cancel-btn" onclick="closeModal()">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Assistant Panel -->
+        <div id="aiPanel" class="ai-panel">
+            <div class="ai-header">
+                <h3><i class="fas fa-robot"></i> AI Assistant</h3>
+                <button class="close-btn" onclick="closeAIPanel()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="ai-body">
+                <div class="ai-messages" id="aiMessages">
+                    <!-- AI messages will appear here -->
+                </div>
+                <div class="ai-input">
+                    <input type="text" id="aiQuery" placeholder="Ask me anything about your notes...">
+                    <button onclick="sendAIQuery()">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Assistant Button -->
+        <button class="ai-assistant-btn" onclick="toggleAIPanel()">
+            <i class="fas fa-robot"></i>
+        </button>
+    </div>
+
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

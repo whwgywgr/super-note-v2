@@ -1,0 +1,337 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #f5f5f5;
+    --text-color: #333;
+    --text-light: #666;
+    --border-color: #e0e0e0;
+    --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: #fff;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header h1 {
+    color: var(--primary-color);
+    font-size: 24px;
+}
+
+.header h1 i {
+    margin-right: 10px;
+}
+
+/* Search Container */
+.search-container {
+    display: flex;
+    gap: 10px;
+}
+
+.search-container input {
+    padding: 8px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    width: 300px;
+}
+
+.search-btn {
+    padding: 8px 15px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Notes Header */
+.notes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.add-note-btn {
+    padding: 8px 15px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Notes List */
+.notes-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.note-item {
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px;
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+}
+
+.note-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.note-content {
+    margin-bottom: 15px;
+}
+
+.note-content p {
+    margin-bottom: 10px;
+}
+
+.note-content small {
+    color: var(--text-light);
+    font-size: 12px;
+    display: block;
+    margin-top: 5px;
+}
+
+.note-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.edit-btn, .delete-btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+}
+
+.delete-btn {
+    color: #e74c3c;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    width: 90%;
+    max-width: 600px;
+    margin: 50px auto;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+
+.modal-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-body input,
+.modal-body textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.modal-body textarea {
+    min-height: 200px;
+    resize: vertical;
+}
+
+.modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.save-btn, .cancel-btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.save-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.cancel-btn {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+}
+
+/* AI Assistant */
+.ai-panel {
+    position: fixed;
+    right: -400px;
+    top: 0;
+    width: 400px;
+    height: 100%;
+    background-color: white;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    z-index: 1000;
+}
+
+.ai-panel.active {
+    right: 0;
+}
+
+.ai-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ai-body {
+    padding: 20px;
+    height: calc(100% - 60px);
+    display: flex;
+    flex-direction: column;
+}
+
+.ai-messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.ai-input {
+    display: flex;
+    gap: 10px;
+}
+
+.ai-input input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.ai-input button {
+    padding: 10px 15px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.ai-assistant-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Notifications */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 4px;
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: var(--shadow);
+    z-index: 1000;
+}
+
+.notification.error {
+    background-color: #e74c3c;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .search-container {
+        width: 100%;
+    }
+
+    .search-container input {
+        width: 100%;
+    }
+
+    .notes-list {
+        grid-template-columns: 1fr;
+    }
+
+    .ai-panel {
+        width: 100%;
+        right: -100%;
+    }
+}

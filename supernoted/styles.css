@@ -1,0 +1,547 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+/* Container */
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.sidebar-header {
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+}
+
+.sidebar-header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.nav-links {
+    list-style: none;
+}
+
+.nav-links li {
+    margin-bottom: 10px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.nav-links a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-links a.active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.nav-links i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    margin-left: 250px;
+    padding: 20px;
+}
+
+/* Layout Styles */
+.layout {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.layout h2 {
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+/* Folder Grid */
+.folder-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+}
+
+.folder-item {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.folder-item:hover {
+    transform: translateY(-2px);
+}
+
+.folder-item i {
+    font-size: 2rem;
+    color: #3498db;
+    margin-bottom: 10px;
+}
+
+.folder-item span {
+    display: block;
+    font-weight: 500;
+}
+
+/* Notes List */
+.notes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.note-item {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+}
+
+.note-item h3 {
+    margin-bottom: 5px;
+    color: #2c3e50;
+}
+
+.note-item p {
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.note-date {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .container {
+        flex-direction: column;
+    }
+
+    .folder-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .folder-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-links a {
+        padding: 15px;
+    }
+}
+
+/* Authentication Pages */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+
+.auth-box {
+    background-color: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.auth-header h1 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.auth-header h2 {
+    color: #34495e;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.auth-header p {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-group i {
+    position: absolute;
+    left: 15px;
+    color: #7f8c8d;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.auth-footer a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Profile Form */
+.profile-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+/* Responsive Design for Auth Pages */
+@media (max-width: 480px) {
+    .auth-box {
+        padding: 20px;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+}
+
+/* Notes Page Styles */
+.notes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.notes-actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.view-toggle {
+    display: flex;
+    gap: 5px;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    color: #7f8c8d;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.btn-icon:hover {
+    background-color: #f1f1f1;
+    color: #2c3e50;
+}
+
+.btn-icon.active {
+    background-color: #3498db;
+    color: white;
+}
+
+.notes-filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
+.search-box {
+    position: relative;
+    flex: 1;
+}
+
+.search-box i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #7f8c8d;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 10px 15px 10px 40px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.filter-group {
+    display: flex;
+    gap: 10px;
+}
+
+.filter-group select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+}
+
+/* Notes Container */
+.notes-container {
+    display: grid;
+    gap: 20px;
+}
+
+.notes-container.grid-view {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.notes-container.list-view {
+    grid-template-columns: 1fr;
+}
+
+.note-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.note-card:hover {
+    transform: translateY(-2px);
+}
+
+.note-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.note-header h3 {
+    margin: 0;
+    color: #2c3e50;
+}
+
+.note-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.note-content {
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.note-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #7f8c8d;
+}
+
+.note-folder {
+    background-color: #f1f1f1;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+/* List View Specific Styles */
+.notes-container.list-view .note-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.notes-container.list-view .note-header {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.notes-container.list-view .note-content {
+    flex: 2;
+    margin-bottom: 0;
+}
+
+.notes-container.list-view .note-footer {
+    flex: 1;
+    justify-content: flex-end;
+}
+
+/* Responsive Design for Notes Page */
+@media (max-width: 768px) {
+    .notes-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-group {
+        flex-direction: column;
+    }
+
+    .notes-container.grid-view {
+        grid-template-columns: 1fr;
+    }
+
+    .notes-container.list-view .note-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .notes-container.list-view .note-content {
+        margin-bottom: 15px;
+    }
+} 
