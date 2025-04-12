@@ -22,6 +22,7 @@ const searchInput = document.getElementById('searchInput');
 const addNoteBtn = document.querySelector('.add-note-btn');
 let currentNoteId = null;
 let quill = null;
+let isSaving = false;
 
 // Initialize Quill
 function initEditor() {
@@ -58,25 +59,39 @@ function loadNotes() {
     db.collection("notes")
         .orderBy("createdAt", "desc")
         .onSnapshot(snapshot => {
+            // Clear the note list first
             noteList.innerHTML = "";
+            
+            // Create a map to track unique notes
+            const uniqueNotes = new Map();
+            
             snapshot.forEach(doc => {
                 const data = doc.data();
-                const createdAt = data.createdAt ? data.createdAt.toDate().toLocaleString() : "No date";
-                const updatedAt = data.updatedAt ? data.updatedAt.toDate().toLocaleString() : "Not updated";
-                
+                // Use the document ID as the key to ensure uniqueness
+                uniqueNotes.set(doc.id, {
+                    id: doc.id,
+                    title: data.title || 'Untitled Note',
+                    content: data.content,
+                    createdAt: data.createdAt ? data.createdAt.toDate().toLocaleString() : "No date",
+                    updatedAt: data.updatedAt ? data.updatedAt.toDate().toLocaleString() : "Not updated"
+                });
+            });
+            
+            // Add unique notes to the list
+            uniqueNotes.forEach(note => {
                 noteList.innerHTML += `
                     <li class="note-item">
                         <div class="note-content">
-                            <h3>${data.title || 'Untitled Note'}</h3>
-                            <div class="note-text">${data.content}</div>
-                            <small>Created: ${createdAt}</small>
-                            <small>Updated: ${updatedAt}</small>
+                            <h3>${note.title}</h3>
+                            <div class="note-text">${note.content}</div>
+                            <small>Created: ${note.createdAt}</small>
+                            <small>Updated: ${note.updatedAt}</small>
                         </div>
                         <div class="note-actions">
-                            <button class="edit-btn" onclick="openEditModal('${doc.id}', '${data.title || ''}', '${data.content}')">
+                            <button class="edit-btn" onclick="openEditModal('${note.id}', '${note.title.replace(/'/g, "\\'")}', '${note.content.replace(/'/g, "\\'")}')">
                                 <i class="fas fa-edit"></i>
                             </button>
-                            <button class="delete-btn" onclick="deleteNote('${doc.id}')">
+                            <button class="delete-btn" onclick="deleteNote('${note.id}')">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>
@@ -89,7 +104,8 @@ function loadNotes() {
 }
 
 // ----- CREATE -----
-function addNote() {
+async function addNote() {
+    const saveBtn = document.querySelector('.save-btn');
     const title = noteTitle.value.trim();
     const content = quill.root.innerHTML;
     
@@ -98,22 +114,33 @@ function addNote() {
         return;
     }
 
-    db.collection("notes").add({
-        title: title,
-        content: content,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-    }).then(() => {
+    // Disable save button
+    saveBtn.disabled = true;
+    saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+
+    try {
+        await db.collection("notes").add({
+            title: title,
+            content: content,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        
         closeModal();
         showNotification("Note added successfully!");
-    }).catch(error => {
+    } catch (error) {
         console.error("Error adding note:", error);
         showNotification("Error adding note. Please try again.", "error");
-    });
+    } finally {
+        // Re-enable save button
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '<i class="fas fa-save"></i> Save';
+    }
 }
 
 // ----- UPDATE -----
-function updateNote() {
+async function updateNote() {
+    const saveBtn = document.querySelector('.save-btn');
     const title = noteTitle.value.trim();
     const content = quill.root.innerHTML;
     
@@ -122,17 +149,27 @@ function updateNote() {
         return;
     }
 
-    db.collection("notes").doc(currentNoteId).update({
-        title: title,
-        content: content,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-    }).then(() => {
+    // Disable save button
+    saveBtn.disabled = true;
+    saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+
+    try {
+        await db.collection("notes").doc(currentNoteId).update({
+            title: title,
+            content: content,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        
         closeModal();
         showNotification("Note updated successfully!");
-    }).catch(error => {
+    } catch (error) {
         console.error("Error updating note:", error);
         showNotification("Error updating note. Please try again.", "error");
-    });
+    } finally {
+        // Re-enable save button
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '<i class="fas fa-save"></i> Save';
+    }
 }
 
 // ----- DELETE -----
@@ -171,11 +208,22 @@ function closeModal() {
 }
 
 function saveNote() {
+    if (isSaving) {
+        return;
+    }
+
+    isSaving = true;
+    
     if (currentNoteId) {
         updateNote();
     } else {
         addNote();
     }
+    
+    // Reset the saving flag after a short delay
+    setTimeout(() => {
+        isSaving = false;
+    }, 1000);
 }
 
 // Search Functionality
