@@ -21,20 +21,21 @@ const noteContent = document.getElementById('noteContent');
 const searchInput = document.getElementById('searchInput');
 const addNoteBtn = document.querySelector('.add-note-btn');
 let currentNoteId = null;
-let editor = null;
+let quill = null;
 
-// Initialize TinyMCE
+// Initialize Quill
 function initEditor() {
-    tinymce.init({
-        selector: '#noteContent',
-        plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table code help wordcount',
-        toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
-        height: 300,
-        menubar: false,
-        setup: function(editor) {
-            editor.on('init', function() {
-                editor.setContent('');
-            });
+    quill = new Quill('#noteContent', {
+        theme: 'snow',
+        modules: {
+            toolbar: [
+                [{ 'header': [1, 2, 3, false] }],
+                ['bold', 'italic', 'underline', 'strike'],
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                [{ 'align': [] }],
+                ['link', 'image'],
+                ['clean']
+            ]
         }
     });
 }
@@ -90,7 +91,7 @@ function loadNotes() {
 // ----- CREATE -----
 function addNote() {
     const title = noteTitle.value.trim();
-    const content = tinymce.get('noteContent').getContent();
+    const content = quill.root.innerHTML;
     
     if (!content) {
         showNotification("Please enter note content", "error");
@@ -114,7 +115,7 @@ function addNote() {
 // ----- UPDATE -----
 function updateNote() {
     const title = noteTitle.value.trim();
-    const content = tinymce.get('noteContent').getContent();
+    const content = quill.root.innerHTML;
     
     if (!content) {
         showNotification("Please enter note content", "error");
@@ -151,21 +152,21 @@ function deleteNote(id) {
 function openModal() {
     noteModal.style.display = 'block';
     noteTitle.value = '';
-    tinymce.get('noteContent').setContent('');
+    quill.setContents([]);
     currentNoteId = null;
 }
 
 function openEditModal(id, title, content) {
     noteModal.style.display = 'block';
     noteTitle.value = title;
-    tinymce.get('noteContent').setContent(content);
+    quill.root.innerHTML = content;
     currentNoteId = id;
 }
 
 function closeModal() {
     noteModal.style.display = 'none';
     noteTitle.value = '';
-    tinymce.get('noteContent').setContent('');
+    quill.setContents([]);
     currentNoteId = null;
 }
 
@@ -208,7 +209,7 @@ function showNotification(message, type = "success") {
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize TinyMCE
+    // Initialize Quill
     initEditor();
     
     // Initialize the app
