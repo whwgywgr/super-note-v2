@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SuperNoted v2</title>
     <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js"></script>
     <!-- Quill.js -->
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
@@ -16,27 +17,110 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content auth-modal">
+            <div class="modal-header">
+                <h3>Welcome to SuperNoted</h3>
+            </div>
+            <div class="modal-body auth-body">
+                <div class="auth-logo">
+                    <i class="fas fa-sticky-note"></i>
+                    <h2>SuperNoted</h2>
+                </div>
+                <p>Sign in to start creating and organizing your notes</p>
+                <button id="googleSignIn" class="google-btn">
+                    <i class="fab fa-google"></i>
+                    Sign in with Google
+                </button>
+                <div class="auth-divider">
+                    <span>or</span>
+                </div>
+                <button id="googleRegister" class="google-btn register-btn">
+                    <i class="fab fa-google"></i>
+                    Register with Google
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Profile Modal -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>User Profile</h3>
+                <button class="close-btn" onclick="closeProfileModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body profile-body">
+                <div class="profile-info">
+                    <div class="profile-avatar">
+                        <img id="profileAvatar" src="" alt="Profile Picture">
+                    </div>
+                    <div class="profile-details">
+                        <h2 id="profileName"></h2>
+                        <p id="profileEmail"></p>
+                        <p class="stats">
+                            <span id="notesCount">0 notes</span> • 
+                            <span id="foldersCount">0 folders</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="profile-actions">
+                    <button id="profileSignOut" class="sign-out-btn-large">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Sign Out
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <header class="header">
             <h1><i class="fas fa-sticky-note"></i> SuperNoted</h1>
-            <div class="search-container">
-                <input type="text" id="searchInput" placeholder="Search notes...">
-                <button class="search-btn"><i class="fas fa-search"></i></button>
+            <div class="header-right">
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search notes...">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="user-profile">
+                    <img id="userAvatar" src="" alt="" class="avatar">
+                    <div class="user-info">
+                        <span id="userName"></span>
+                    </div>
+                </div>
             </div>
         </header>
 
         <main class="main-content">
-            <div class="notes-header">
-                <h2>List Noted</h2>
-                <button class="add-note-btn" onclick="openModal()">
-                    <i class="fas fa-plus"></i> Add Note
-                </button>
+            <div class="sidebar">
+                <div class="folders-header">
+                    <h2>Folders</h2>
+                    <button class="add-folder-btn" onclick="openFolderModal()">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="folders-container">
+                    <ul id="folderList" class="folders-list">
+                        <!-- Folders will be dynamically added here -->
+                    </ul>
+                </div>
             </div>
 
-            <div class="notes-container">
-                <ul id="noteList" class="notes-list">
-                    <!-- Notes will be dynamically added here -->
-                </ul>
+            <div class="notes-section">
+                <div class="notes-header">
+                    <h2>Notes</h2>
+                    <button class="add-note-btn" onclick="openModal()">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="notes-container">
+                    <ul id="noteList" class="notes-list">
+                        <!-- Notes will be dynamically added here -->
+                    </ul>
+                </div>
             </div>
         </main>
 
@@ -50,6 +134,12 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <div class="folder-selector">
+                        <label for="noteFolder">Folder:</label>
+                        <select id="noteFolder">
+                            <option value="">No Folder</option>
+                        </select>
+                    </div>
                     <input type="text" id="noteTitle" placeholder="Note title...">
                     <div id="noteContent"></div>
                 </div>
@@ -64,34 +154,59 @@
             </div>
         </div>
 
-        <!-- AI Assistant Panel -->
-        <div id="aiPanel" class="ai-panel">
-            <div class="ai-header">
-                <h3><i class="fas fa-robot"></i> AI Assistant</h3>
-                <button class="close-btn" onclick="closeAIPanel()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="ai-body">
-                <div class="ai-messages" id="aiMessages">
-                    <!-- AI messages will appear here -->
+        <!-- Folder Modal -->
+        <div id="folderModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="folderModalTitle">New Folder</h3>
+                    <button class="close-btn" onclick="closeFolderModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
-                <div class="ai-input">
-                    <input type="text" id="aiQuery" placeholder="Ask me anything about your notes...">
-                    <button onclick="sendAIQuery()">
-                        <i class="fas fa-paper-plane"></i>
+                <div class="modal-body">
+                    <input type="text" id="folderName" placeholder="Folder name...">
+                </div>
+                <div class="modal-footer">
+                    <button class="save-btn" onclick="saveFolder()">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                    <button class="cancel-btn" onclick="closeFolderModal()">
+                        <i class="fas fa-times"></i> Cancel
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- AI Assistant Button -->
-        <button class="ai-assistant-btn" onclick="toggleAIPanel()">
-            <i class="fas fa-robot"></i>
-        </button>
+        <!-- Note Preview Modal -->
+        <div id="previewModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="previewTitle"></h3>
+                    <button class="close-btn" onclick="closePreviewModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="previewContent"></div>
+                </div>
+                <div class="modal-footer">
+                    <button class="edit-btn" onclick="openEditModalFromPreview()">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                    <button class="cancel-btn" onclick="closePreviewModal()">
+                        <i class="fas fa-times"></i> Close
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <!-- Footer -->
+    <footer class="footer">
+        <p>SuperNoted 2025</p>
+    </footer>
+
     <!-- Custom JavaScript -->
-    <script src="script.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
